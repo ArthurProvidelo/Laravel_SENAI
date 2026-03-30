@@ -18,7 +18,8 @@
             <br><br>
 
             <label for="email"><b>E-mail:</b></label>
-            <input style="border-radius: 7px;" type="email" name="email" id="email" placeholder="Digite seu email" required value="{{ old('email') }}" >
+            <input style="border-radius: 7px;" type="email" name="email" id="email" placeholder="Digite seu email" required value="{{ old('email') }}">
+            <br><br>
 
             <button type="submit" style="border-radius: 7px; background-color:darkblue; color: white;" >Cadastrar</button>
 

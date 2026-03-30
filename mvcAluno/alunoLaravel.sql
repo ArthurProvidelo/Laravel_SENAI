@@ -8,3 +8,5 @@ CREATE TABLE alunos(
     created_at timestamp null,
     update_at timestamp null
 );
+
+SELECT * FROM alunos;

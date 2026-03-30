@@ -20,4 +20,6 @@ Route::post('/aluno/salvar', [AlunoController::class, 'add'])->name('Aluno.salva
 //Tela de atualizar
 Route::get('/aluno/{id}/atualizar', [AlunoController::class, 'atualizar'])->name('aluno.atualizar');
 
-Route::put('/aluno/{id}/update',[AlunoController::class, 'update'])->name('aluno.update');
+Route::put('/aluno/{id}/update',[AlunoController::class, 'update'])->name('aluno.update');  
+
+Route::delete('/aluno/{id}',[AlunoController::class, 'deletar'])->name('aluno.delete'); 
