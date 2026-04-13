@@ -100,4 +100,5 @@ class ProdutoController extends Controller
         return redirect()->route('produto.listar')
             ->with('success','Produto excluído com sucesso!');
     }
+    
 }
