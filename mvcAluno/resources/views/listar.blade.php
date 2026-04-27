@@ -13,6 +13,9 @@
                 <th>ID</th>
                 <th>Nome</th>
                 <th>Email</th>
+                <th>ID Turma 🆔</th>
+                <th>Série </th>
+                <th>Número da Sala 🔢</th>
                 <th>Atualizar ✍🏻</th>
                 <th>Deletar 🗑️</th>
             </tr>
@@ -20,21 +23,23 @@
         <tbody>
             @forelse($alunos as $aluno)
                 <tr>
-                    <td>{{ $aluno->id }}</td>
-                    <td>{{ $aluno->nome }}</td>
-                    <td>{{ $aluno->email }}</td>
-                    <td>
-                        <a href="{{route('aluno.atualizar', $aluno->id)}}">Atualizar</a>
+                    <td style="text-align: center">{{ $aluno->id }}</td>
+                    <td style="text-align: center">{{ $aluno->nome }}</td>
+                    <td style="text-align: center">{{ $aluno->email }}</td>
+                    <td style="text-align: center">{{ $aluno->turma?->id }}</td>
+                    <td style="text-align: center">{{ $aluno->turma?->serie }}</td>
+                    <td style="text-align: center">{{ $aluno->turma?->numSala }}</td>
+                    <td style="text-align: center; text-decoration: none;" >
+                        <a href="{{route('aluno.atualizar', $aluno->id)}}" style="text-decoration: none;">Atualizar</a>
                     </td>
-                    <td>
+                    <td style="text-align: center">
                         <form action="{{ route ('aluno.delete', $aluno->id)}}" method="POST" onsubmit="return confirm('Deseja realmente excluir?');">
                             @csrf
                             @method('DELETE')
-                            <button type="submit">Excluir</button>
+                            <button type="submit" style="background-color: red; color: white;">Excluir</button>
                         </form>
                     </td>
                 </tr>
-
             @empty
                 <tr>
                     <td colspan="3">Nenhum Aluno Encontrado 🔍</td>
