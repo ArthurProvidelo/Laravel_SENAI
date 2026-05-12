@@ -13,7 +13,7 @@
         @endif
 
     <div style="background-color: gray; border-radius: 10px; display: flex; justify-content: center; width: 100%; max-width: 400px; height: auto; margin: 50px auto; padding: 40px; background-color: white; padding: 10px; border-radius: 20px; width: 400px; box-shadow: 0 10px 10px #182c8f66 ;">
-        <form action="{{route('Setor.salvar')}}" method="POST">
+        <form action="{{route('setor.salvar')}}" method="POST">
             @csrf
 
             <label for="nomeSetor"><b>Nome</b></label>

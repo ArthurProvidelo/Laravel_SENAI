@@ -33,7 +33,7 @@
             </table>
             <br>
             <button style="border-radius: 7px; background-color: blue; display: block; margin: 15px auto;">
-            <a href="{{route('Setor.cadastro')}}" style="text-decoration: none; color: white">Cadastrar novo setor</a>
+            <a href="{{route('setor.cadastro')}}" style="text-decoration: none; color: white">Cadastrar novo setor</a>
         </button>
     </div>
 </body>

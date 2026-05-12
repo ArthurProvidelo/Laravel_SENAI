@@ -49,7 +49,6 @@ class ProdutoController extends Controller
         return redirect()->back()->with('success', 'Produto cadastrado com sucesso!');
     }
 
-    // TELA EDITAR
     public function editar($id){
         $produto = Produto::with('detalhes')->findOrFail($id);
         $setores = Setores::all();
@@ -57,7 +56,6 @@ class ProdutoController extends Controller
         return view('editar', compact('produto', 'setores'));
     }
 
-    // ATUALIZAR PRODUTO + DETALHES
     public function atualizar(Request $request, $id){
         $request->validate([
             'nome' => 'required',
