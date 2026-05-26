@@ -21,10 +21,25 @@ class SetorController extends Controller
         return redirect()->back()->with('success', 'Setor cadastrado com sucesso!');
     }
 
-    public function listar(){
+    public function listar(Request $request){
+        try{
         $query = Setores::query();
-        $setores = $query->get(); // mesma coisa que um SELECT * FROM tabela
+
+        // filtro por nome
+        if($request->filled('nomeSetor')){
+            $query->where('nomeSetor', 'like', '%'.$request->nomeSetor .'%');
+        }
+        // filtro por número de setor
+        $setores = $query->get();
+
         return view('listarSetor', compact('setores'));
+
+       } catch(\Exception $e){
+            return response()->json([
+                'setores' => collect(),
+                'erro' => 'Erro interno do servidor'
+            ], 500);
+        }
     }
    
 }

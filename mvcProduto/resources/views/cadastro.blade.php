@@ -1,75 +1,481 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_','-',app()->getLocale()) }}">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Produto 💻</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #0f172a;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --bg: #f1f5f9;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top left, #3b82f6 0%, transparent 30%),
+                radial-gradient(circle at bottom right, #1e3a8a 0%, transparent 35%),
+                linear-gradient(135deg, #0f172a 0%, #111827 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            overflow-x: hidden;
+        }
+
+        .background-glow {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: rgba(37, 99, 235, 0.25);
+            filter: blur(120px);
+            border-radius: 50%;
+            top: -150px;
+            left: -150px;
+            z-index: 0;
+        }
+
+        .background-glow-2 {
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            background: rgba(59, 130, 246, 0.18);
+            filter: blur(120px);
+            border-radius: 50%;
+            bottom: -120px;
+            right: -120px;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 650px; /* Um pouco mais largo para acomodar o grid duplo perfeitamente */
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 28px;
+            padding: 45px;
+            box-shadow:
+                0 25px 50px rgba(0, 0, 0, 0.25),
+                0 10px 20px rgba(37, 99, 235, 0.15);
+            animation: fadeUp 0.8s ease;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .top-icon {
+            width: 85px;
+            height: 85px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            box-shadow: 0 15px 30px rgba(37, 99, 235, 0.35);
+        }
+
+        .top-icon i {
+            color: white;
+            font-size: 42px;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.98rem;
+            margin-bottom: 35px;
+            line-height: 1.6;
+        }
+
+        .decoration-line {
+            width: 70px;
+            height: 5px;
+            border-radius: 999px;
+            background: linear-gradient(to right, var(--primary), #60a5fa);
+            margin: 0 auto 30px;
+        }
+
+        .alert-success {
+            background: rgba(22, 163, 74, 0.1);
+            border: 1px solid rgba(22, 163, 74, 0.2);
+            color: var(--success);
+            padding: 14px 18px;
+            border-radius: 14px;
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+        }
+
+        .alert-danger {
+            background: rgba(220, 38, 38, 0.08);
+            border: 1px solid rgba(220, 38, 38, 0.15);
+            color: var(--danger);
+            padding: 18px;
+            border-radius: 16px;
+            margin-top: 25px;
+        }
+
+        .alert-danger ul {
+            margin-left: 18px;
+            margin-top: 8px;
+        }
+
+        /* Sistema de Grid para Organização Visual dos Campos */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 4px;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        .form-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+
+        .form-label i {
+            color: var(--primary);
+            font-size: 18px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            height: 58px;
+            border: 1.5px solid var(--border);
+            border-radius: 16px;
+            padding: 0 18px;
+            font-size: 1rem;
+            background: #f8fafc;
+            transition: all 0.3s ease;
+            outline: none;
+            color: var(--text);
+            appearance: none; /* Remove a seta padrão do sistema no select */
+        }
+
+        .form-select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 18px center;
+            background-size: 16px;
+            padding-right: 45px;
+        }
+
+        .form-input:focus, .form-select:focus {
+            border-color: var(--primary);
+            background: var(--white);
+            box-shadow: 0 0 0 5px rgba(37, 99, 235, 0.12);
+            transform: translateY(-1px);
+        }
+
+        .form-input::placeholder {
+            color: #94a3b8;
+        }
+
+        /* Ações e Links */
+        .actions-wrapper {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .submit-btn {
+            width: 100%;
+            height: 58px;
+            border: none;
+            border-radius: 18px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.35s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 12px 25px rgba(37, 99, 235, 0.28);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 35px rgba(37, 99, 235, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        .link-list {
+            font-size: 0.95rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s ease;
+        }
+
+        .link-list:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        .footer-text {
+            margin-top: 25px;
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                padding: 30px 24px;
+                border-radius: 24px;
+            }
+
+            .title {
+                font-size: 1.7rem;
+            }
+
+            .top-icon {
+                width: 75px;
+                height: 75px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .full-width {
+                grid-column: span 1;
+            }
+        }
+    </style>
 </head>
-    <body style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">
-        <h1 style="display: flex; justify-content: center;">Cadastro de Setor</h1>
 
-        @if(session('sucess'))
-            <p style="color:green">{{ session('success')}}</p>
-        @endif
+<body>
 
-    <div style="background-color: gray; border-radius: 10px; display: flex; justify-content: center; width: 100%; max-width: 300px; height: auto; margin: 50px auto; padding: 40px; background-color: white; padding: 10px; border-radius: 20px; width: 400px; box-shadow: 0 10px 10px #182c8f66 ;">
-        <form action="{{route('produto.salvar')}}" method="POST">
-            @csrf
+    <div class="background-glow"></div>
+    <div class="background-glow-2"></div>
 
-            <label for="nome"><b>Produto:</b></label>
-            <input style="width: 50%; padding: 10px 14px; border-radius: 20px; border: none; background-color: #f5f5f5; font-size: 14px; color: #333; outline: none;" type="text" name="nome" id="nome" placeholder="Digite o nome do produto" require value="{{ old('nome') }}">
-            <br><br>
+    <div class="container">
 
-            <label for="preco"><b>Preço:</b></label>
-            <input style="width: 50%; padding: 10px 14px; border-radius: 20px; border: none;background-color: #f5f5f5; font-size: 14px; color: #333; outline: none;" type="number" name="preco" id="preco" placeholder="Digite o preço" require value="{{ old('preco') }}">
-            <br><br>
+        <div class="card">
 
-            <label for="qtd"><b>Quantidade:</b></label>
-            <input style="width: 50%; padding: 10px 14px; border-radius: 20px; border: none; background-color: #f5f5f5; font-size: 14px; color: #333; outline: none;" type="number" name="quantidade" id="quantidade" placeholder="Digite a quantidade" require value="{{ old('qtd') }}">
-            <br><br>
+            <div class="top-icon">
+                <i class='bx bx-package'></i>
+            </div>
 
-            <label for="setor"><b>Setor:</b></label>
-                <select style="width: 50%; padding: 10px 14px; border-radius: 20px; border: none; background-color: #f5f5f5; font-size: 14px; color: #333; outline: none;" name="setor_id" id="setor">
-                    @foreach ($setores as $setor)
-                        <option value="{{ $setor->id }}">
-                            {{ $setor->nomeSetor }}
-                        </option>
-                    @endforeach
-                </select>
-            <br><br>
+            <h1 class="title">Cadastrar Produto</h1>
 
-            <label><b>Descrição:</b></label>
-            <input style="width: 50%; padding: 10px 14px; border-radius: 20px; border: none; background-color: #f5f5f5; font-size: 14px; outline: none;"
-            type="text" name="descricao" placeholder="Digite a descrição" required value="{{ old('descricao') }}">
-            <br><br>
+            <div class="decoration-line"></div>
 
-            <label><b>Tamanho:</b></label>
-            <input style="width: 50%; padding: 10px 14px; border-radius: 20px; border: none; background-color: #f5f5f5; font-size: 14px; outline: none;"
-            type="text" name="tamanho" placeholder=" Metros, 40cm..." required value="{{ old('tamanho') }}">
-            <br><br>
+            <p class="subtitle">
+                Preencha as especificações abaixo para registrar um novo produto 
+                no estoque de forma rápida, moderna e integrada aos setores.
+            </p>
 
-            <label><b>Peso:</b></label>
-            <input style="width: 50%; padding: 10px 14px; border-radius: 20px; border: none; background-color: #f5f5f5; font-size: 14px; outline: none;"
-            type="number" step="0.01" name="peso" placeholder=" 1.50 kg" required value="{{ old('peso') }}">
-            <br><br>
+            @if(session('success'))
+                <div class="alert-success">
+                    <i class='bx bx-check-circle'></i>
+                    <span>{{ session('success') }}</span>
+                </div>
+            @endif
 
-            <button type="submit" style="border-radius: 7px; background-color:darkblue; color: white; display: block; margin: 15px auto;"" >Cadastrar</button>
+            <form action="{{ route('produto.salvar') }}" method="POST">
+                @csrf
 
-            <button style="border-radius: 7px; display: block; margin: 15px auto;"">
-                <a href="{{route('produto.listar')}}" style="text-decoration: none; color: black">Listar produtos</a>
-            </button>
-        </form>
+                <div class="form-grid">
+                    
+                    {{-- Nome do Produto --}}
+                    <div class="form-group full-width">
+                        <label class="form-label" for="nome">
+                            <i class='bx bx-purchase-tag-alt'></i>
+                            Nome do Produto
+                        </label>
+                        <div class="input-wrapper">
+                            <input class="form-input" type="text" name="nome" id="nome" placeholder="Ex: Notebook Dell Inspiron" required value="{{ old('nome') }}">
+                        </div>
+                    </div>
+
+                    {{-- Preço --}}
+                    <div class="form-group">
+                        <label class="form-label" for="preco">
+                            <i class='bx bx-dollar-circle'></i>
+                            Preço (R$)
+                        </label>
+                        <div class="input-wrapper">
+                            <input class="form-input" type="number" step="0.01" name="preco" id="preco" placeholder="0,00" required value="{{ old('preco') }}">
+                        </div>
+                    </div>
+
+                    {{-- Quantidade --}}
+                    <div class="form-group">
+                        <label class="form-label" for="quantidade">
+                            <i class='bx bx-layer'></i>
+                            Quantidade
+                        </label>
+                        <div class="input-wrapper">
+                            <input class="form-input" type="number" name="quantidade" id="quantidade" placeholder="Ex: 15" required value="{{ old('quantidade') }}">
+                        </div>
+                    </div>
+
+                    {{-- Setor Relacionado --}}
+                    <div class="form-group full-width">
+                        <label class="form-label" for="setor">
+                            <i class='bx bx-buildings'></i>
+                            Setor Responsável
+                        </label>
+                        <div class="input-wrapper">
+                            <select class="form-select" name="setor_id" id="setor" required>
+                                <option value="" disabled selected>Selecione o setor de destino</option>
+                                @foreach ($setores as $setor)
+                                    <option value="{{ $setor->id }}" {{ old('setor_id') == $setor->id ? 'selected' : '' }}>
+                                        {{ $setor->nomeSetor }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    {{-- Descrição --}}
+                    <div class="form-group full-width">
+                        <label class="form-label" for="descricao">
+                            <i class='bx bx-detail'></i>
+                            Descrição Breve
+                        </label>
+                        <div class="input-wrapper">
+                            <input class="form-input" type="text" name="descricao" id="descricao" placeholder="Detalhes principais do item" required value="{{ old('descricao') }}">
+                        </div>
+                    </div>
+
+                    {{-- Tamanho --}}
+                    <div class="form-group">
+                        <label class="form-label" for="tamanho">
+                            <i class='bx bx-ruler'></i>
+                            Dimensões / Tamanho
+                        </label>
+                        <div class="input-wrapper">
+                            <input class="form-input" type="text" name="tamanho" id="tamanho" placeholder="Ex: 40cm, 2 Metros..." required value="{{ old('tamanho') }}">
+                        </div>
+                    </div>
+
+                    {{-- Peso --}}
+                    <div class="form-group">
+                        <label class="form-label" for="peso">
+                            <i class='bx bx-git-commit'></i>
+                            Peso (kg)
+                        </label>
+                        <div class="input-wrapper">
+                            <input class="form-input" type="number" step="0.001" name="peso" id="peso" placeholder="Ex: 1.550" required value="{{ old('peso') }}">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="actions-wrapper">
+                    <button type="submit" class="submit-btn">
+                        <i class='bx bx-save'></i>
+                        Cadastrar Produto
+                    </button>
+                    
+                    <a href="{{ route('produto.listar') }}" class="link-list">
+                        <i class='bx bx-list-ul'></i>
+                        Ir para listagem de produtos
+                    </a>
+                </div>
+
+            </form>
+
+            @if($errors->any())
+                <div class="alert-danger">
+                    <strong>
+                        <i class='bx bx-error-circle'></i>
+                        Ocorreram alguns erros:
+                    </strong>
+                    <ul>
+                        @foreach ($errors->all() as $erro)
+                            <li>{{ $erro }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <div class="footer-text">
+                Sistema profissional de gerenciamento de estoque
+            </div>
+
+        </div>
+
     </div>
 
-        @if($errors->any())
-            <div style="color:red;">
-                <ul>
-                    @foreach ($errors->all as $erro)
-                        <li>{{ $erro }}</li>                    
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        
-    </body>
+</body>
+
 </html>
