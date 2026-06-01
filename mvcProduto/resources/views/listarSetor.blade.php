@@ -181,7 +181,6 @@
             padding: 40px 0 !important;
         }
 
-        /* Botão Cadastrar Novo Setor */
         .footer-actions {
             display: flex;
             justify-content: center;
@@ -223,6 +222,88 @@
                 font-size: 1.6rem;
             }
         }
+
+        .form-busca-setor{
+            display:flex;
+            gap:12px;
+            margin-bottom:25px;
+            align-items:center;
+        }
+
+        .search-box{
+            flex:1;
+            position:relative;
+        }
+
+        .search-box i{
+            position:absolute;
+            left:16px;
+            top:50%;
+            transform:translateY(-50%);
+            color:#64748b;
+            font-size:20px;
+        }
+
+        .search-box input{
+            width:100%;
+            height:54px;
+            padding:0 20px 0 50px;
+            border:2px solid #e2e8f0;
+            border-radius:16px;
+            font-size:15px;
+            font-family:'Inter', sans-serif;
+            background:#fff;
+            transition:all .3s ease;
+        }
+
+        .search-box input:focus{
+            outline:none;
+            border-color:#2563eb;
+            box-shadow:0 0 0 5px rgba(37,99,235,.15);
+        }
+
+        .btn-search{
+            height:54px;
+            padding:0 24px;
+            border:none;
+            border-radius:16px;
+            background:linear-gradient(135deg,#2563eb,#1e40af);
+            color:#fff;
+            font-weight:600;
+            font-size:15px;
+            cursor:pointer;
+            display:flex;
+            align-items:center;
+            gap:8px;
+            transition:all .3s ease;
+            box-shadow:0 8px 20px rgba(37,99,235,.25);
+        }
+
+        .btn-search:hover{
+            transform:translateY(-3px);
+            box-shadow:0 15px 30px rgba(37,99,235,.35);
+        }
+
+        .btn-search:active{
+            transform:translateY(0);
+        }
+
+        @media(max-width:768px){
+
+            .form-busca-setor{
+                flex-direction:column;
+            }
+
+            .search-box,
+            .btn-search{
+                width:100%;
+            }
+
+            .btn-search{
+                justify-content:center;
+            }
+        }
+
     </style>
 </head>
 
@@ -240,9 +321,22 @@
                 <div class="decoration-line"></div>
             </div>
 
-            <form method="GET" action="{{ route('setor.listar')}}">
-                <input type="text" name="nomeSetor" placeholder="Digite o nome do setor" value="{{request('nomeSetor')}}">
-                <button type="submit">Buscar</button>
+            {{-- Campo de input para pesquisar o nome do setor --}}
+           <form method="GET" action="{{ route('setor.listar') }}" class="form-busca-setor">
+                <div class="search-box">
+                    <i class='bx bx-search'></i>
+                    <input
+                        type="text"
+                        name="nomeSetor"
+                        placeholder="Pesquisar setor..."
+                        value="{{ request('nomeSetor') }}"
+                    >
+                </div>
+                    {{-- Botão de que vai filtrar  --}}
+                <button type="submit" class="btn-search">
+                    <i class='bx bx-filter-alt'></i>
+                    Buscar
+                </button>
             </form>
 
             <div class="table-responsive">

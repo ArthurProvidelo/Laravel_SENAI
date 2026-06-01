@@ -24,7 +24,7 @@ class ProdutoController extends Controller
     public function add(Request $request){
         $request->validate([
             'nome' => 'required|string|max:255',
-            'quantidade' => 'required|integer',
+            'quantidade' => 'required|numeric|max:1000',
             'preco' => 'required|numeric',
             'setor_id' => 'required|exists:setores,id',
             'descricao' => 'required',
@@ -53,14 +53,14 @@ class ProdutoController extends Controller
         $produto = Produto::with('detalhes')->findOrFail($id);
         $setores = Setores::all();
 
-        return view('editar', compact('produto', 'setores'));
+        return view('atualizar', compact('produto', 'setores'));
     }
 
     public function atualizar(Request $request, $id){
         $request->validate([
             'nome' => 'required',
             'preco' => 'required',
-            'quantidade' => 'required',
+            'quantidade' => 'required|numeric|max:1000',
             'setor_id' => 'required|exists:setores,id',
             'descricao' => 'required',
             'tamanho' => 'required',

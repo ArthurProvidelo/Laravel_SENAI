@@ -267,6 +267,57 @@
                 height: 75px;
             }
         }
+
+        .actions-wrapper {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .submit-btn {
+            width: 100%;
+            height: 58px;
+            border: none;
+            border-radius: 18px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.35s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 12px 25px rgba(37, 99, 235, 0.28);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 35px rgba(37, 99, 235, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        .link-list {
+            font-size: 0.95rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s ease;
+        }
+
+        .link-list:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
     </style>
 </head>
 
@@ -278,13 +329,11 @@
     <div class="container">
 
         <div class="card">
-
             <div class="top-icon">
                 <i class='bx bx-buildings'></i>
             </div>
 
             <h1 class="title">Cadastrar Setor</h1>
-
             <div class="decoration-line"></div>
 
             <p class="subtitle">
@@ -341,11 +390,17 @@
                 </div>
 
                 <button type="submit" class="submit-btn">
-                    <i class='bx bx-save'></i>
                     Cadastrar Setor
+                    <i class='bx bx-paper-plane'></i>
                 </button>
-
             </form>
+
+            <div class="actions-wrapper">                
+                <a href="{{ route('setor.listar') }}" class="link-list">
+                    <i class='bx bx-list-ul'></i>
+                    Ir para listagem de setores
+                </a>
+            </div>
 
             @if($errors->any())
                 <div class="alert-danger">

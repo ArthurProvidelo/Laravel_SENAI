@@ -8,7 +8,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//rotas produtos
+// rotas produtos
 
 Route::get('/produto/listar', [ProdutoController::class, 'listar'])->name('produto.listar');
 
@@ -16,14 +16,14 @@ Route::get('/produto/cadastrar', [ProdutoController::class, 'cadastrar'])->name(
 
 Route::post('/produto/salvar', [ProdutoController::class, 'add'])->name('produto.salvar');
 
-Route::get('/produto/{id}/atualizar', [ProdutoController::class, 'atualizar'])->name('produto.atualizar');
+Route::put('/produto/{id}/update', [ProdutoController::class, 'atualizar'])->name('produto.update');
 
-Route::put('/produto/{id}/update', [ProdutoController::class, 'update'])->name('produto.update');
+// Route::put('/produto/{id}/update', [ProdutoController::class, 'update'])->name('produto.update');
 
+Route::get('/produto/{id}/editar', [ProdutoController::class, 'editar'])->name('produto.editar');
 
 Route::delete('/produto/{id}/deletar', [ProdutoController::class, 'deletar'])->name('produto.deletar');
     
-Route::get('/produto/{id}/editar', [ProdutoController::class, 'editar'])->name('produto.editar');
 
 
 // rotas setores
