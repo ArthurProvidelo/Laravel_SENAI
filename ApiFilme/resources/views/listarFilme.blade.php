@@ -8,6 +8,21 @@
     <body>
         <h1>Controle de Filmes</h1>
 
+        <form method="GET" action="{{ route('filme.listar') }}" class="form-busca-setor">
+            <div class="search-box">
+                <i class='bx bx-search'></i>
+                <input type="text" name="titulo" placeholder="Pesquisar título..." value="{{ request('titulo') }}">
+            </div>
+
+            <div class="search-box">
+                <input type="date" name="dataLancamento" value="{{ request('dataLancamento') }}">
+            </div>
+            {{-- Botão de que vai filtrar  --}}
+            <button type="submit">
+                Buscar
+            </button>
+        </form>
+
         <table border="1">
             <thead>
                 <tr>
@@ -25,25 +40,26 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse($Filmes as $Filme)
+                @forelse($filmes as $filme)
                     <tr>
-                        <td>{{ $Filme->id }}</td>
-                        <td>{{ $Filme->titulo }}</td>
-                        <td>{{ $Filme->dataLancamento }}</td>
-                        <td>{{ $Filme->sinopse }}</td>
-                        <td>{{ $Filme->genero }}</td>
-                        <td>{{ $Filme->orcamento }}</td>
-                        <td>{{ $Filme->autor->id ?? 'N/A' }}</td>
-                        <td>{{ $Filme->autor->nome ?? 'N/A'}}</td>
-                        <td>{{ $Filme->autor->dataNascimento ?? 'N/A' }}</td>
-                        <td>{{ $Filme->autor->email ?? 'N/A' }}</td>
-                        <td>{{ $Filme->autor->telefone ?? 'N/A' }}</td>
-                </tr>
+                        <td>{{ $filme->id }}</td>
+                        <td>{{ $filme->titulo }}</td>
+                        <td>{{ $filme->dataLancamento }}</td>
+                        <td>{{ $filme->sinopse }}</td>
+                        <td>{{ $filme->genero }}</td>
+                        <td>{{ $filme->orcamento }}</td>
+                        <td>{{ $filme->autor->id ?? 'N/A' }}</td>
+                        <td>{{ $filme->autor->nome ?? 'N/A' }}</td>
+                        <td>{{ $filme->autor->dataNascimento ?? 'N/A' }}</td>
+                        <td>{{ $filme->autor->email ?? 'N/A' }}</td>
+                        <td>{{ $filme->autor->telefone ?? 'N/A' }}</td>
+                    </tr>
                 @empty
                     <tr>
-                        <td colsoan="13">Nenhum Filme encontrado</td>
+                        <td colspan="11">Nenhum Filme encontrado</td>
                     </tr>
                 @endforelse
             </tbody>
+        </table>
     </body>
 </html>
