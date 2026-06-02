@@ -3,35 +3,63 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\SetorController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-// rotas produtos
+// Rotas de Usuário
+Route::get('/login', function () {
+    return view('login');
+})->name('login');
 
-Route::get('/produto/listar', [ProdutoController::class, 'listar'])->name('produto.listar');
 
-Route::get('/produto/cadastrar', [ProdutoController::class, 'cadastrar'])->name('produto.cadastro');
+// Rota para fazer login
+Route::post('/autenticar', [UserController::class, 'autenticar'])
+->name('login.autenticar');
 
-Route::post('/produto/salvar', [ProdutoController::class, 'add'])->name('produto.salvar');
+Route::get('/usuario/cadastrar', function(){
+    return view('cadastroUsuario');
+});
 
-Route::put('/produto/{id}/update', [ProdutoController::class, 'atualizar'])->name('produto.update');
+Route::post('/usuario/salvar', [UserController::class, 'add'])
+->name('usuario.salvar');
 
-// Route::put('/produto/{id}/update', [ProdutoController::class, 'update'])->name('produto.update');
 
-Route::get('/produto/{id}/editar', [ProdutoController::class, 'editar'])->name('produto.editar');
+// Rotas de Produtos
 
-Route::delete('/produto/{id}/deletar', [ProdutoController::class, 'deletar'])->name('produto.deletar');
+Route::get('/produto/listar', [ProdutoController::class, 'listar'])
+->name('produto.listar');
+
+Route::middleware('auth')->group(function () {
     
+        Route::get('/produto/cadastrar', [ProdutoController::class, 'cadastrar'])
+    ->name('produto.cadastro');
 
+        Route::post('/produto/salvar', [ProdutoController::class, 'add'])
+    ->name('produto.salvar');
 
-// rotas setores
+        Route::put('/produto/{id}/update', [ProdutoController::class, 'atualizar'])
+    ->name('produto.update');
 
-Route::get('/setor/cadastrar', function(){
-    return view('cadastrarSetor');
-})->name('setor.cadastro');
+        Route::get('/produto/{id}/editar', [ProdutoController::class, 'editar'])
+    ->name('produto.editar');
 
-Route::post('/setor/salvar', [SetorController::class, 'add'])->name('setor.salvar');
+        Route::delete('/produto/{id}/deletar', [ProdutoController::class, 'deletar'])
+    ->name('produto.deletar');
+        
 
-Route::get('/setor/listar', [SetorController::class, 'listar'])->name('setor.listar');
+    // rotas setores
+        Route::get('/setor/cadastrar', function(){
+        return view('cadastrarSetor');
+    })->name('setor.cadastro');
+
+        Route::post('/setor/salvar', [SetorController::class, 'add'])
+    ->name('setor.salvar');
+
+        Route::get('/setor/listar', [SetorController::class, 'listar'])
+    ->name('setor.listar');
+
+});
+

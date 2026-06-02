@@ -8,19 +8,24 @@ use Illuminate\Http\Request;
 
 class ProdutoController extends Controller
 {
-    // LISTAR
+    // Listar
     public function listar(){
         $produtos = Produto::with(['setor', 'detalhes'])->get();
         return view('listar', compact('produtos'));
     }
 
-    // TELA CADASTRO
+    // Tela Cadastro
     public function cadastrar(){
+
+        if(auth()->user()->tipo != 'usuario'){
+            abort(403);
+        }
+
         $setores = Setores::all();
         return view('cadastro', compact('setores'));
     }
 
-    // SALVAR PRODUTO + DETALHES
+    // Salvar Produtos + Detalhes
     public function add(Request $request){
         $request->validate([
             'nome' => 'required|string|max:255',
@@ -90,7 +95,7 @@ class ProdutoController extends Controller
             ->with('success', 'Produto atualizado com sucesso!');
     }
 
-    // DELETAR
+    // Deletar
     public function deletar($id){
         $produto = Produto::findOrFail($id);
         $produto->delete();
