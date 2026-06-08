@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Usuário 👤</title>
+    <title>Usuário | Trocar Senha 🔒</title>
 
     <!-- Fonte -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -362,10 +362,10 @@
 
         <div class="card">
             <div class="top-icon">
-                <i class='bx bx-user'></i>
+                <i class='bx bx-key'></i>
             </div>
 
-            <h1 class="title">Login de Usuário</h1>
+            <h1 class="title">Trocar Senha</h1>
             <div class="decoration-line"></div>
 
             {{-- <p class="subtitle">
@@ -380,7 +380,7 @@
                 </div>
             @endif
 
-            <form action="{{route('login.autenticar')}}" method="POST">
+            <form action="{{route('senha.trocar')}}" method="POST">
                 @csrf
 
                 <div class="form-group">
@@ -404,7 +404,7 @@
                 <div class="form-group">
                     <label class="form-label" for="password">
                         <i class='bx bx-lock'></i>
-                        Senha
+                        Nova Senha
                     </label>
 
                     <div class="input-wrapper">
@@ -422,7 +422,7 @@
 
 
                 <button type="submit" class="submit-btn">
-                    Entrar
+                    Alterar Senha
                 </button>
 
                 <a href="{{ route('usuario.cadastrar') }}" class="link-list">
@@ -430,6 +430,13 @@
                     Cadastrar um novo Usuário
                 </a>
             </form>
+
+            {{-- <div class="actions-wrapper">                
+                <a href="{{ route('setor.listar') }}" class="link-list">
+                    <i class='bx bx-list-ul'></i>
+                    Ir para listagem de setores
+                </a>
+            </div> --}}
 
             @if($errors->any())
                 <div class="alert-danger">

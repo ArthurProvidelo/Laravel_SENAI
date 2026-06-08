@@ -19,6 +19,7 @@ class ProdutoController extends Controller
 
         if(auth()->user()->tipo != 'usuario'){
             abort(403);
+            // return view('cadastroUsuario)
         }
 
         $setores = Setores::all();

@@ -21,10 +21,20 @@ Route::post('/autenticar', [UserController::class, 'autenticar'])
 
 Route::get('/usuario/cadastrar', function(){
     return view('cadastroUsuario');
-});
+})->name('usuario.cadastrar');
 
 Route::post('/usuario/salvar', [UserController::class, 'add'])
 ->name('usuario.salvar');
+
+// Rota de trocar a senha
+Route::get('/senha', function(){
+    return view('trocarSenha');
+})->name('senha.tela');
+
+// Rota de trocar senha
+Route::post('/senha/trocar', [UserController::class, 'trocarSenha'])
+->name('senha.trocar');
+
 
 
 // Rotas de Produtos
