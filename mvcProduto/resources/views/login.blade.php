@@ -127,14 +127,6 @@
             margin-bottom: 10px;
         }
 
-        /* .subtitle {
-            text-align: center;
-            color: var(--text-light);
-            font-size: 0.98rem;
-            margin-bottom: 35px;
-            line-height: 1.6;
-        } */
-
         .alert-success {
             background: rgba(22, 163, 74, 0.1);
             border: 1px solid rgba(22, 163, 74, 0.2);
@@ -443,13 +435,11 @@
                             <li>{{ $erro }}</li>
                         @endforeach
                     </ul>
-                </div>
+                </div>  
             @endif
 
         </div>
-
     </div>
-
 </body>
 
 </html>

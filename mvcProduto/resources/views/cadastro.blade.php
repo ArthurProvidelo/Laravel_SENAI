@@ -73,7 +73,7 @@
             position: relative;
             z-index: 1;
             width: 100%;
-            max-width: 650px; /* Um pouco mais largo para acomodar o grid duplo perfeitamente */
+            max-width: 650px;
         }
 
         .card {
@@ -86,6 +86,7 @@
                 0 25px 50px rgba(0, 0, 0, 0.25),
                 0 10px 20px rgba(37, 99, 235, 0.15);
             animation: fadeUp 0.8s ease;
+            position: relative; /* Necessário para posicionar o botão de logout */
         }
 
         @keyframes fadeUp {
@@ -99,6 +100,44 @@
             }
         }
 
+        /* Nova estilização do Logout integrada ao topo do Card */
+        .logout-wrapper {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            z-index: 10;
+        }
+
+        .btn-logout {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 16px;
+            background-color: #f8fafc;
+            color: var(--text-light);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .btn-logout i {
+            font-size: 18px;
+        }
+
+        .btn-logout:hover {
+            background-color: rgba(220, 38, 38, 0.08);
+            color: var(--danger);
+            border-color: rgba(220, 38, 38, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .btn-logout:active {
+            transform: scale(0.98);
+        }
+
         .top-icon {
             width: 85px;
             height: 85px;
@@ -107,7 +146,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 25px;
+            margin: 10px auto 25px; /* Adicionado margem superior pequena para afastar do topo */
             box-shadow: 0 15px 30px rgba(37, 99, 235, 0.35);
         }
 
@@ -167,7 +206,6 @@
             margin-top: 8px;
         }
 
-        /* Sistema de Grid para Organização Visual dos Campos */
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -212,7 +250,7 @@
             transition: all 0.3s ease;
             outline: none;
             color: var(--text);
-            appearance: none; /* Remove a seta padrão do sistema no select */
+            appearance: none;
         }
 
         .form-select {
@@ -234,7 +272,6 @@
             color: #94a3b8;
         }
 
-        /* Ações e Links */
         .actions-wrapper {
             margin-top: 30px;
             display: flex;
@@ -293,10 +330,16 @@
             font-size: 0.9rem;
         }
 
+        /* Responsividade Ajustada */
         @media (max-width: 600px) {
             .card {
-                padding: 30px 24px;
+                padding: 60px 24px 30px; /* Aumentado padding superior para dar espaço ao logout fixado */
                 border-radius: 24px;
+            }
+
+            .logout-wrapper {
+                top: 15px;
+                right: 15px;
             }
 
             .title {
@@ -306,6 +349,7 @@
             .top-icon {
                 width: 75px;
                 height: 75px;
+                margin-top: 0;
             }
 
             .form-grid {
@@ -328,6 +372,16 @@
     <div class="container">
 
         <div class="card">
+
+            <div class="logout-wrapper">
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn-logout">
+                        <i class="bx bx-door-open-alt"></i>
+                        <span>Sair</span>
+                    </button>
+                </form>
+            </div>
 
             <div class="top-icon">
                 <i class='bx bx-package'></i>

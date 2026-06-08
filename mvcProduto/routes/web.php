@@ -9,11 +9,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// ------------------------------------------------------------------------------------------
+
 // Rotas de Usuário
 Route::get('/login', function () {
     return view('login');
 })->name('login');
-
 
 // Rota para fazer login
 Route::post('/autenticar', [UserController::class, 'autenticar'])
@@ -35,13 +36,18 @@ Route::get('/senha', function(){
 Route::post('/senha/trocar', [UserController::class, 'trocarSenha'])
 ->name('senha.trocar');
 
+// Rota para sair
+Route::post('/logout', [UserController::class, 'logout'])
+->name('logout');
 
+// ------------------------------------------------------------------------------------------
 
 // Rotas de Produtos
 
 Route::get('/produto/listar', [ProdutoController::class, 'listar'])
 ->name('produto.listar');
 
+// só posso ter acesso as rotas que estão dentro middleware -> se eu estiver logado
 Route::middleware('auth')->group(function () {
     
         Route::get('/produto/cadastrar', [ProdutoController::class, 'cadastrar'])
@@ -60,7 +66,7 @@ Route::middleware('auth')->group(function () {
     ->name('produto.deletar');
         
 
-    // rotas setores
+    // Rotas de Setores
         Route::get('/setor/cadastrar', function(){
         return view('cadastrarSetor');
     })->name('setor.cadastro');
