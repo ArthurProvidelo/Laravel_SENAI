@@ -11,5 +11,3 @@ CREATE TABLE produtos(
     created_at TIMESTAMP NULL,
     updated_at TIMESTAMP NULL
 );
-
-DROP TABLE produtos;
